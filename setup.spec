@@ -1,7 +1,7 @@
 Summary: A set of system configuration and setup files
 Name: setup
 Version: 2.8.14
-Release: 20%{?dist}
+Release: 20%{?dist}.1
 License: Public Domain
 Group: System Environment/Base
 URL: https://fedorahosted.org/setup/
@@ -130,6 +130,19 @@ end
 %ghost %verify(not md5 size mtime) %config(noreplace,missingok) /etc/mtab
 
 %changelog
+* Tue Aug 20 2013 Ondrej Vasik <ovasik@redhat.com> 2.8.14-20.1
+- reserve uid 189 for hacluster (#998923)
+- reserve gid 189 for haclient (#998923)
+- reserve 160:160 for swift (openstack-swift) (#998912)
+- reserve 161:161 for glance (openstack-glance) (#998912)
+- reserve 162:162 for nova (openstack-nova) (#998912)
+- reserve 163:163 for keystone (openstack-keystone) (#998912)
+- reserve 164:164 for quantum (openstack-quantum) (#998912)
+- reserve 165:165 uidgid pair for cinder (#998912)
+- reserve 166:166 uidgid pair for ceilometer (#998912)
+- reserve 187:187 for heat (openstack-heat) (#998912)
+- reserve 185:185 for jboss-as (#998912)
+
 * Tue Oct 02 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.14-20
 - reserve 186 uid for jbosson-agent user, reserve 186 gid
   for jbosson group (#839410)
