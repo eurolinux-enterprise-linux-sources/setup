@@ -1,7 +1,7 @@
 Summary: A set of system configuration and setup files
 Name: setup
 Version: 2.8.14
-Release: 16%{?dist}
+Release: 20%{?dist}
 License: Public Domain
 Group: System Environment/Base
 URL: https://fedorahosted.org/setup/
@@ -32,6 +32,8 @@ Patch10: setup-2.8.14-spritunes.patch
 Patch11: setup-2.8.14-ext4filesystems.patch
 #drop root's supplementary groups
 Patch12: setup-2.8.14-nosuppgroup.patch
+#modify /etc/profile to work more nicely with ksh
+Patch13: setup-unsetpathmunge.patch
 Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
 BuildRequires: bash tcsh perl
@@ -55,6 +57,7 @@ setup files, such as passwd, group, and profile.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 ./shadowconvert.sh
 
 %build
@@ -127,6 +130,17 @@ end
 %ghost %verify(not md5 size mtime) %config(noreplace,missingok) /etc/mtab
 
 %changelog
+* Tue Oct 02 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.14-20
+- reserve 186 uid for jbosson-agent user, reserve 186 gid
+  for jbosson group (#839410)
+
+* Tue Oct 02 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.14-19
+- reserve 188:188 for haproxy (#860221)
+
+* Tue Sep 25 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.14-18
+- modify unset pathmunge in /etc/profile to work more
+  nicely with ksh (#791140)
+
 * Fri Mar 23 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.14-16
 - reserve 184:184 for mongodb (#806052)
 
