@@ -1,0 +1,12 @@
+diff -urNp setup-2.8.14-orig/services setup-2.8.14/services
+--- setup-2.8.14-orig/services	2010-01-12 14:28:22.000000000 +0100
++++ setup-2.8.14/services	2012-01-31 15:29:52.761148374 +0100
+@@ -583,7 +583,7 @@ fido            60179/udp               
+ 
+ 
+ # Updated additional list from IANA with all missing services 04/07/2008
+-spr-itunes      0/tcp   spl-itunes      # Shirt Pocket netTunes
++#spr-itunes      0/tcp   spl-itunes      # Shirt Pocket netTunes - no port allocated
+ compressnet     2/tcp                   # Management Utility
+ compressnet     2/udp                   # Management Utility
+ #compressnet    3/tcp                   # Compression Process

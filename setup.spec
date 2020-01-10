@@ -1,7 +1,7 @@
 Summary: A set of system configuration and setup files
 Name: setup
 Version: 2.8.14
-Release: 13%{?dist}
+Release: 16%{?dist}
 License: Public Domain
 Group: System Environment/Base
 URL: https://fedorahosted.org/setup/
@@ -26,6 +26,12 @@ Patch7: setup-respectprofiledumask.patch
 Patch8: setup-host-orderline.patch
 #do not override PROMPT_COMMAND envvar, if set before /etc/bashrc processing
 Patch9: setup-respectpromptcommand.patch
+#comment out bad spr-itunes entry from /etc/services
+Patch10: setup-2.8.14-spritunes.patch
+#add ext4 to /etc/filesystems
+Patch11: setup-2.8.14-ext4filesystems.patch
+#drop root's supplementary groups
+Patch12: setup-2.8.14-nosuppgroup.patch
 Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
 BuildRequires: bash tcsh perl
@@ -46,6 +52,9 @@ setup files, such as passwd, group, and profile.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 ./shadowconvert.sh
 
 %build
@@ -118,6 +127,23 @@ end
 %ghost %verify(not md5 size mtime) %config(noreplace,missingok) /etc/mtab
 
 %changelog
+* Fri Mar 23 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.14-16
+- reserve 184:184 for mongodb (#806052)
+
+* Wed Mar 21 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.14-15
+- reserve 180:180 for aeolus (#804203)
+- reserve 182:182 for katello (#804204)
+- reserve 183:183 for elasticsearch (#804205)
+- drop root's supplementary groups (#724007)
+
+* Tue Jan 31 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.14-14
+- comment out bad spr-itunes entry from /etc/services(#710185)
+- reserve 177:177 for dhcpd (#738177)
+- reserve 179:179 for sanlock (#738294)
+- reserve 181:181 for wallaby (#772746)
+- reserve 134:134 for cimsrvr (#760178)
+- add ext4 to /etc/filesystems (#771388)
+
 * Thu Jun 30 2011 Ondrej Vasik <ovasik@redhat.com> 2.8.14-13
 - assign 174:174 uidgid for user/group retrace
   (abrt retrace-server, #706012)
