@@ -1,0 +1,6 @@
+diff -urNp setup-2.8.14-orig/host.conf setup-2.8.14/host.conf
+--- setup-2.8.14-orig/host.conf	2010-01-12 14:28:22.000000000 +0100
++++ setup-2.8.14/host.conf	2011-06-30 15:10:10.735176510 +0200
+@@ -1,2 +1 @@
+ multi on
+-order hosts,bind

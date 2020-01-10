@@ -1,0 +1,74 @@
+diff -urNp setup-2.8.14-orig/bashrc setup-2.8.14/bashrc
+--- setup-2.8.14-orig/bashrc	2010-12-09 10:52:01.011489708 +0100
++++ setup-2.8.14/bashrc	2010-12-09 12:28:38.333254552 +0100
+@@ -73,9 +73,9 @@ if ! shopt -q login_shell ; then # We're
+     for i in /etc/profile.d/*.sh; do
+         if [ -r "$i" ]; then
+             if [ "$PS1" ]; then
+-                . $i
++                . "$i"
+             else
+-                . $i >/dev/null 2>&1
++                . "$i" >/dev/null 2>&1
+             fi
+         fi
+     done
+diff -urNp setup-2.8.14-orig/csh.cshrc setup-2.8.14/csh.cshrc
+--- setup-2.8.14-orig/csh.cshrc	2010-01-12 14:28:22.000000000 +0100
++++ setup-2.8.14/csh.cshrc	2010-12-03 16:25:58.000000000 +0100
+@@ -59,11 +59,11 @@ if (! $?loginsh) then
+     if ( -d /etc/profile.d ) then
+         set nonomatch
+         foreach i ( /etc/profile.d/*.csh )
+-            if ( -r $i ) then
++            if ( -r "$i" ) then
+                 if ($?prompt) then
+-                    source $i
++                    source "$i"
+                 else
+-                    source $i >&/dev/null
++                    source "$i" >&/dev/null
+                 endif
+             endif
+         end
+diff -urNp setup-2.8.14-orig/csh.login setup-2.8.14/csh.login
+--- setup-2.8.14-orig/csh.login	2010-12-09 10:52:01.008489708 +0100
++++ setup-2.8.14/csh.login	2010-12-03 16:25:58.000000000 +0100
+@@ -1,6 +1,7 @@
+ # /etc/csh.login
+ 
+ # System wide environment and startup programs, for login setup
++
+ if ( $?PATH ) then
+   #do not override user specified PATH
+ else
+@@ -17,11 +18,11 @@ set history=1000
+ if ( -d /etc/profile.d ) then
+         set nonomatch
+         foreach i ( /etc/profile.d/*.csh )
+-                if ( -r $i ) then
++                if ( -r "$i" ) then
+ 	                        if ($?prompt) then
+-	                              source $i
++	                              source "$i"
+ 	                        else
+-	                              source $i >& /dev/null
++	                              source "$i" >& /dev/null
+ 	                        endif
+                 endif
+         end
+diff -urNp setup-2.8.14-orig/profile setup-2.8.14/profile
+--- setup-2.8.14-orig/profile	2010-12-09 10:52:01.012489708 +0100
++++ setup-2.8.14/profile	2010-12-09 12:29:09.963250779 +0100
+@@ -57,9 +57,9 @@ export PATH USER LOGNAME MAIL HOSTNAME H
+ for i in /etc/profile.d/*.sh ; do
+     if [ -r "$i" ]; then
+         if [ "$PS1" ]; then
+-            . $i
++            . "$i"
+         else
+-            . $i >/dev/null 2>&1
++            . "$i" >/dev/null 2>&1
+         fi
+     fi
+ done

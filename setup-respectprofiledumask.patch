@@ -1,0 +1,82 @@
+diff -urNp setup-2.8.14-orig/bashrc setup-2.8.14/bashrc
+--- setup-2.8.14-orig/bashrc	2010-12-09 14:06:27.826250290 +0100
++++ setup-2.8.14/bashrc	2010-12-03 16:25:58.000000000 +0100
+@@ -3,21 +3,10 @@
+ # System wide functions and aliases
+ # Environment stuff goes in /etc/profile
+ 
+-# It's NOT good idea to change this file unless you know what you
+-# are doing. Much better way is to create custom.sh shell script in
+-# /etc/profile.d/ to make custom changes to environment. This will
+-# prevent need for merging in future updates.
+-
+-# By default, we want this to get set.
+-# Even for non-interactive, non-login shells.
+-# Current threshold for system reserved uid/gids is 200
+-# You could check uidgid reservation validity in
+-# /usr/share/doc/setup-*/uidgid file
+-if [ $UID -gt 199 ] && [ "`id -gn`" = "`id -un`" ]; then
+-    umask 002
+-else
+-    umask 022
+-fi
++# It's NOT a good idea to change this file unless you know what you
++# are doing. It's much better to create a custom.sh shell script in
++# /etc/profile.d/ to make custom changes to your environment, as this
++# will prevent the need for merging in future updates.
+ 
+ # are we an interactive shell?
+ if [ "$PS1" ]; then
+@@ -67,7 +56,16 @@ if ! shopt -q login_shell ; then # We're
+         esac
+     }
+ 
+-    
++    # By default, we want umask to get set. This sets it for non-login shell.
++    # Current threshold for system reserved uid/gids is 200
++    # You could check uidgid reservation validity in
++    # /usr/share/doc/setup-*/uidgid file
++    if [ $UID -gt 199 ] && [ "`id -gn`" = "`id -un`" ]; then
++       umask 002
++    else
++       umask 022
++    fi
++
+     # Only display echos from profile.d scripts if we are no login shell
+     # and interactive - otherwise just process them to set envvars
+     for i in /etc/profile.d/*.sh; do
+diff -urNp setup-2.8.14-orig/profile setup-2.8.14/profile
+--- setup-2.8.14-orig/profile	2010-12-09 14:06:27.828239534 +0100
++++ setup-2.8.14/profile	2010-12-03 16:25:58.000000000 +0100
+@@ -3,10 +3,10 @@
+ # System wide environment and startup programs, for login setup
+ # Functions and aliases go in /etc/bashrc
+ 
+-# It's NOT good idea to change this file unless you know what you
+-# are doing. Much better way is to create custom.sh shell script in
+-# /etc/profile.d/ to make custom changes to environment. This will
+-# prevent need for merging in future updates.
++# It's NOT a good idea to change this file unless you know what you
++# are doing. It's much better to create a custom.sh shell script in
++# /etc/profile.d/ to make custom changes to your environment, as this
++# will prevent the need for merging in future updates.
+ 
+ pathmunge () {
+     case ":${PATH}:" in
+@@ -54,6 +54,16 @@ fi
+ 
+ export PATH USER LOGNAME MAIL HOSTNAME HISTSIZE HISTCONTROL
+ 
++# By default, we want umask to get set. This sets it for login shell
++# Current threshold for system reserved uid/gids is 200
++# You could check uidgid reservation validity in
++# /usr/share/doc/setup-*/uidgid file
++if [ $UID -gt 199 ] && [ "`id -gn`" = "`id -un`" ]; then
++    umask 002
++else
++    umask 022
++fi
++
+ for i in /etc/profile.d/*.sh ; do
+     if [ -r "$i" ]; then
+         if [ "${-#*i}" != "$-" ]; then
