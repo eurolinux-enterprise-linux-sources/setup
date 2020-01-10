@@ -1,7 +1,7 @@
 Summary: A set of system configuration and setup files
 Name: setup
 Version: 2.8.14
-Release: 20%{?dist}.1
+Release: 23%{?dist}
 License: Public Domain
 Group: System Environment/Base
 URL: https://fedorahosted.org/setup/
@@ -34,6 +34,9 @@ Patch11: setup-2.8.14-ext4filesystems.patch
 Patch12: setup-2.8.14-nosuppgroup.patch
 #modify /etc/profile to work more nicely with ksh
 Patch13: setup-unsetpathmunge.patch
+#call id with fullpath (#1228282)
+Patch14: setup-fullpath.patch
+
 Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
 BuildRequires: bash tcsh perl
@@ -58,6 +61,7 @@ setup files, such as passwd, group, and profile.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 ./shadowconvert.sh
 
 %build
@@ -130,18 +134,26 @@ end
 %ghost %verify(not md5 size mtime) %config(noreplace,missingok) /etc/mtab
 
 %changelog
-* Tue Aug 20 2013 Ondrej Vasik <ovasik@redhat.com> 2.8.14-20.1
-- reserve uid 189 for hacluster (#998923)
-- reserve gid 189 for haclient (#998923)
-- reserve 160:160 for swift (openstack-swift) (#998912)
-- reserve 161:161 for glance (openstack-glance) (#998912)
-- reserve 162:162 for nova (openstack-nova) (#998912)
-- reserve 163:163 for keystone (openstack-keystone) (#998912)
-- reserve 164:164 for quantum (openstack-quantum) (#998912)
-- reserve 165:165 uidgid pair for cinder (#998912)
-- reserve 166:166 uidgid pair for ceilometer (#998912)
-- reserve 187:187 for heat (openstack-heat) (#998912)
-- reserve 185:185 for jboss-as (#998912)
+* Wed Nov 02 2016 Ondrej Vasik <ovasik@redhat.com> 2.8.14-23
+- use full pathnames for basic utilities (#1228282)
+
+* Tue Nov 01 2016 Ondrej Vasik <ovasik@redhat.com> 2.8.14-22
+- reserve 142:142 for activemq (#1086921)
+- reserve 167:167 for ceph (ceph-common) (#1221042)
+- change reservation for 185:185 from jboss-as to jboss (#1192412)
+
+* Tue Aug 20 2013 Ondrej Vasik <ovasik@redhat.com> 2.8.14-21
+- reserve uid 189 for hacluster (#872208)
+- reserve gid 189 for haclient (#872208)
+- reserve 160:160 for swift (openstack-swift) (#991502)
+- reserve 161:161 for glance (openstack-glance) (#991502)
+- reserve 162:162 for nova (openstack-nova) (#991502)
+- reserve 163:163 for keystone (openstack-keystone) (#991502)
+- reserve 164:164 for quantum (openstack-quantum) (#991502)
+- reserve 165:165 uidgid pair for cinder (#991502)
+- reserve 166:166 uidgid pair for ceilometer (#991502)
+- reserve 187:187 for heat (openstack-heat) (#991502)
+- reserve 185:185 for jboss-as (#991502)
 
 * Tue Oct 02 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.14-20
 - reserve 186 uid for jbosson-agent user, reserve 186 gid

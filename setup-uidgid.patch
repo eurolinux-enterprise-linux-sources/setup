@@ -18,7 +18,7 @@ diff -urNp setup-2.8.14-orig/uidgid setup-2.8.14/uidgid
  arpwatch	77	77	/var/lib/arpwatch		/sbin/nologin	arpwatch
  fax	78	78	/var/spool/fax		/sbin/nologin	mgetty
  nocpulse	79	79	/etc/sysconfig/nocpulse		/bin/bash	nocpulse
-@@ -111,9 +111,42 @@ nobody	99	99	/		/sbin/nologin	setup
+@@ -111,9 +111,44 @@ nobody	99	99	/		/sbin/nologin	setup
  users	-	100	-		-	setup
  qemu	107	107	/		/sbin/nologin	libvirt
  ovirt	108	108	/		/sbin/nologin	libvirt
@@ -30,6 +30,7 @@ diff -urNp setup-2.8.14-orig/uidgid setup-2.8.14/uidgid
 +cimsrvr	134	134	/		/sbin/nologin	tog-pegasus-libs
 +ricci	140	140	/var/lib/ricci		/sbin/nologin	ricci
 +luci	141	141	/var/lib/luci		/sbin/nologin	luci
++activemq	142	142	/usr/share/activemq		/sbin/nologin	activemq
 +stap-server	155	155	/var/lib/stap-server		/sbin/nologin	systemtap
 +swift	160	160	/var/lib/swift		/sbin/nologin	openstack-swift
 +glance	161	161	/var/lib/glance		/sbin/nologin	openstack-glance
@@ -38,6 +39,7 @@ diff -urNp setup-2.8.14-orig/uidgid setup-2.8.14/uidgid
 +quantum	164	164	/var/lib/quantum		/sbin/nologin	openstack-quantum
 +cinder	165	165	/var/lib/cinder		/sbin/nologin	openstack-cinder
 +ceilometer	166	166	/var/lib/ceilometer		/sbin/nologin	openstack-ceilometer
++ceph	167	167	/var/lib/ceph		/sbin/nologin	ceph-common
 +avahi-autoipd	170	170	/var/lib/avahi-autoipd		/sbin/nologin	avahi
 +pulse	171	171	/var/run/pulse		/sbin/nologin	pulseaudio
 +rtkit	172	172	/proc		/sbin/nologin	rtkit
@@ -52,7 +54,7 @@ diff -urNp setup-2.8.14-orig/uidgid setup-2.8.14/uidgid
 +katello	182	182	/usr/share/katello		/sbin/nologin	katello-common
 +elasticsearch	183	183	/usr/share/java/elasticsearch		/sbin/nologin	elasticsearch
 +mongodb	184	184	/var/lib/mongodb		/sbin/nologin	mongodb
-+jboss-as	185	185	/usr/share/jboss-as		/sbin/nologin	jboss-as
++jboss	185	185	/var/lib/jbossas		/sbin/nologin	jboss
 +jbosson-agent	186	-	/		/sbin/nologin	jboss-on-agent
 +jbosson	-	186	-		-	jboss-on-agent
 +haproxy	188	188	/var/lib/haproxy		/sbin/nologin	haproxy
