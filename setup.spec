@@ -1,7 +1,7 @@
 Summary: A set of system configuration and setup files
 Name: setup
 Version: 2.8.71
-Release: 6%{?dist}
+Release: 7%{?dist}
 License: Public Domain
 Group: System Environment/Base
 URL: https://fedorahosted.org/setup/
@@ -17,6 +17,7 @@ Patch1: setup-2.8.71-securetty-mainframes.patch
 Patch2: setup-2.8.71-bashrc-shellvar.patch
 Patch3: setup-2.8.71-uidgidchanges.patch
 Patch4: setup-2.8.71-filesystems.patch
+Patch5: setup-2.8.71-fullpath.patch
 
 %description
 The setup package contains a set of important system configuration and
@@ -29,6 +30,7 @@ setup files, such as passwd, group, and profile.
 %patch2 -p1 -b .envvar
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 ./shadowconvert.sh
 
@@ -51,6 +53,8 @@ chmod 0644 %{buildroot}/etc/environment
 chmod 0400 %{buildroot}/etc/{shadow,gshadow}
 chmod 0644 %{buildroot}/var/log/lastlog
 touch %{buildroot}/etc/fstab
+touch %{buildroot}/etc/subuid
+touch %{buildroot}/etc/subgid
 
 # remove unpackaged files from the buildroot
 rm -f %{buildroot}/etc/Makefile
@@ -83,6 +87,8 @@ end
 %verify(not md5 size mtime) %config(noreplace) /etc/group
 %verify(not md5 size mtime) %attr(0000,root,root) %config(noreplace,missingok) /etc/shadow
 %verify(not md5 size mtime) %attr(0000,root,root) %config(noreplace,missingok) /etc/gshadow
+%verify(not md5 size mtime) %config(noreplace) /etc/subuid
+%verify(not md5 size mtime) %config(noreplace) /etc/subgid
 %config(noreplace) /etc/services
 %verify(not md5 size mtime) %config(noreplace) /etc/exports
 %config(noreplace) /etc/aliases
@@ -107,12 +113,10 @@ end
 %ghost %verify(not md5 size mtime) %config(noreplace,missingok) /etc/fstab
 
 %changelog
-* Wed Aug 12 2015 Scientific Linux Auto Patch Process <SCIENTIFIC-LINUX-DEVEL@LISTSERV.FNAL.GOV>
-- Eliminated rpmbuild "bogus date" error due to inconsistent weekday,
-  by assuming the date is correct and changing the weekday.
-  Wed Aug 15 2002 --> Wed Aug 14 2002 or Thu Aug 15 2002 or Wed Aug 21 2002 or ....
-  Mon Aug 21 2012 --> Mon Aug 20 2012 or Tue Aug 21 2012 or Mon Aug 27 2012 or ....
-  Mon Dec 02 2012 --> Mon Nov 26 2012 or Sun Dec 02 2012 or Mon Dec 03 2012 or ....
+* Wed May 03 2016 Ondrej Vasik <ovasik@redhat.com> - 2.8.71-7
+- add basic empty subuid/subgid files for docker (#1311278)
+- specify full path to utilities in /etc/profile and /etc/bashrc
+  (#1331871)
 
 * Fri May 22 2015 Ondrej Vasik <ovasik@redhat.com> - 2.8.71-6
 - change reservation of 185:185 to jboss user (#1192413)
@@ -176,12 +180,10 @@ end
 * Wed Jan 16 2013 Ondrej Vasik <ovasik@redhat.com> 2.8.64-1
 - correct handling of 256 color terminals in bashrc
 
-* Sun Dec 02 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.63-1
-  Mon Dec 02 2012 --> Mon Nov 26 2012 or Sun Dec 02 2012 or Mon Dec 03 2012 or ....
+* Mon Dec 02 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.63-1
 - ovirtagent created by ovirt-guest-agent
 
-* Sun Dec 02 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.62-1
-  Mon Dec 02 2012 --> Mon Nov 26 2012 or Sun Dec 02 2012 or Mon Dec 03 2012 or ....
+* Mon Dec 02 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.62-1
 - rename rhevagent uidgid reservation to ovirtagent
 
 * Fri Nov 02 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.61-1
@@ -195,8 +197,7 @@ end
 - update /etc/services to match with latest IANA
   assignments
 
-* Tue Aug 21 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.58-1
-  Mon Aug 21 2012 --> Mon Aug 20 2012 or Tue Aug 21 2012 or Mon Aug 27 2012 or ....
+* Mon Aug 21 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.58-1
 - reserve 110:110 for jetty (#849927)
 
 * Mon Aug 06 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.57-1
@@ -739,8 +740,7 @@ end
 * Wed Aug 28 2002 Preston Brown <pbrown@redhat.com> 2.5.19-1
 - fix bug #61129 (~ substitution)
 
-* Thu Aug 15 2002 Jens Petersen <petersen@redhat.com> 2.5.18-1
-  Wed Aug 15 2002 --> Wed Aug 14 2002 or Thu Aug 15 2002 or Wed Aug 21 2002 or ....
+* Wed Aug 15 2002 Jens Petersen <petersen@redhat.com> 2.5.18-1
 - bring back the screen case in /etc/bashrc, since /etc/screenrc no
   longer sets defhstatus (#60596, #60597)
 
