@@ -1,7 +1,7 @@
 Summary: A set of system configuration and setup files
 Name: setup
 Version: 2.8.71
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: Public Domain
 Group: System Environment/Base
 URL: https://fedorahosted.org/setup/
@@ -107,6 +107,21 @@ end
 %ghost %verify(not md5 size mtime) %config(noreplace,missingok) /etc/fstab
 
 %changelog
+* Wed Aug 12 2015 Scientific Linux Auto Patch Process <SCIENTIFIC-LINUX-DEVEL@LISTSERV.FNAL.GOV>
+- Eliminated rpmbuild "bogus date" error due to inconsistent weekday,
+  by assuming the date is correct and changing the weekday.
+  Wed Aug 15 2002 --> Wed Aug 14 2002 or Thu Aug 15 2002 or Wed Aug 21 2002 or ....
+  Mon Aug 21 2012 --> Mon Aug 20 2012 or Tue Aug 21 2012 or Mon Aug 27 2012 or ....
+  Mon Dec 02 2012 --> Mon Nov 26 2012 or Sun Dec 02 2012 or Mon Dec 03 2012 or ....
+
+* Fri May 22 2015 Ondrej Vasik <ovasik@redhat.com> - 2.8.71-6
+- change reservation of 185:185 to jboss user (#1192413)
+- reserve uidgid pair 167:167 for ceph (#1221043)
+- reserve uidgid for systemd-network(192:192) (#1213820)
+- reserve uidgid for systemd-resolve(193:193) (#1213820)
+- mention systemd-jounal-gateway can be dynamic (#1213820) 
+
+
 * Fri Aug 15 2014 Ondrej Vasik <ovasik@redhat.com> - 2.8.71-5
 - reserve uidgid pair 142:142 for activemq (#1086923)
 - add xfs to /etc/filesystems, fallback to /proc/filesystems
@@ -161,10 +176,12 @@ end
 * Wed Jan 16 2013 Ondrej Vasik <ovasik@redhat.com> 2.8.64-1
 - correct handling of 256 color terminals in bashrc
 
-* Mon Dec 02 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.63-1
+* Sun Dec 02 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.63-1
+  Mon Dec 02 2012 --> Mon Nov 26 2012 or Sun Dec 02 2012 or Mon Dec 03 2012 or ....
 - ovirtagent created by ovirt-guest-agent
 
-* Mon Dec 02 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.62-1
+* Sun Dec 02 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.62-1
+  Mon Dec 02 2012 --> Mon Nov 26 2012 or Sun Dec 02 2012 or Mon Dec 03 2012 or ....
 - rename rhevagent uidgid reservation to ovirtagent
 
 * Fri Nov 02 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.61-1
@@ -178,7 +195,8 @@ end
 - update /etc/services to match with latest IANA
   assignments
 
-* Mon Aug 21 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.58-1
+* Tue Aug 21 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.58-1
+  Mon Aug 21 2012 --> Mon Aug 20 2012 or Tue Aug 21 2012 or Mon Aug 27 2012 or ....
 - reserve 110:110 for jetty (#849927)
 
 * Mon Aug 06 2012 Ondrej Vasik <ovasik@redhat.com> 2.8.57-1
@@ -721,7 +739,8 @@ end
 * Wed Aug 28 2002 Preston Brown <pbrown@redhat.com> 2.5.19-1
 - fix bug #61129 (~ substitution)
 
-* Wed Aug 15 2002 Jens Petersen <petersen@redhat.com> 2.5.18-1
+* Thu Aug 15 2002 Jens Petersen <petersen@redhat.com> 2.5.18-1
+  Wed Aug 15 2002 --> Wed Aug 14 2002 or Thu Aug 15 2002 or Wed Aug 21 2002 or ....
 - bring back the screen case in /etc/bashrc, since /etc/screenrc no
   longer sets defhstatus (#60596, #60597)
 
